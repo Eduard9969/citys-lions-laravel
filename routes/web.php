@@ -18,14 +18,17 @@ Route::group(['middleware' => 'auth.registed'], function () {
     /**
      * Home
      */
-    Route::get('/','HomeController@index');
+    Route::get('/','HomeController@index')->name('main');
     Route::get('/home', function() { return redirect(\route('dashboard')); })->name('home');
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
 
     /**
      * Places
      */
-    Route::resource('places', 'PlaceController');
+    Route::resource('places', 'PlaceController')->names([
+        'index' => 'places.list',
+        'show'  => 'places.show'
+    ]);
 
     /**
      * Guides
@@ -59,7 +62,7 @@ Route::group(['middleware' => 'auth.registed'], function () {
                 'show'      => 'places.item',
                 'edit'      => 'places.edit',
                 'update'    => 'places.update',
-                'delete'    => 'places.delete',
+                'destroy'   => 'places.delete',
             ]
         ]);
 

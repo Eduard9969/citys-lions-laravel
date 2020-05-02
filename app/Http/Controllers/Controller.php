@@ -28,6 +28,12 @@ class Controller extends BaseController
     protected $user_login = null;
 
     /**
+     * List Limit
+     * @var int
+     */
+    protected $list_item_count = 25;
+
+    /**
      * Controller constructor.
      */
     public function __construct() {

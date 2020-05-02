@@ -15,14 +15,25 @@
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
-                <!-- Authentication Links -->
-                <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        @if(Auth::user()->first_name) {{ Auth::user()->first_name }} @else {{ Auth::user()->login }} @endif <span class="caret"></span>
-                    </a>
+                @guest
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
+                    @endif
+                @else
+                    <!-- Authentication Links -->
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            @if(isset(Auth::user()->first_name)) {{ Auth::user()->first_name }} @elseif(isset(Auth::user()->login)) {{ Auth::user()->login }} @endif <span class="caret"></span>
+                        </a>
 
-                    @include('components.menus.userdropdown')
-                </li>
+                        @include('components.menus.userdropdown')
+                    </li>
+                @endguest
             </ul>
         </div>
     </div>

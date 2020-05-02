@@ -1,7 +1,7 @@
 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
     @role('admin')
     @if(!empty($admin_area))
-        <a href="{{ route('home') }}" class="dropdown-item">
+        <a href="{{ route('main') }}" target="_blank" class="dropdown-item">
             {{ __('Back to Site') }}
         </a>
     @else
@@ -21,8 +21,7 @@
 
     <div class="dropdown-divider"></div>
     <a class="dropdown-item" href="{{ route('logout') }}"
-       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+       onclick="event.preventDefault();document.getElementById('logout-form').submit();">
         {{ __('Logout') }}
     </a>
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

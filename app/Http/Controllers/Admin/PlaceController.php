@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class PlaceController extends BaseAdminController
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -69,10 +70,7 @@ class PlaceController extends BaseAdminController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+    public function show($id) { /* */ }
 
     /**
      * Show the form for editing the specified resource.
@@ -97,6 +95,12 @@ class PlaceController extends BaseAdminController
      */
     public function update(PlaceRequest $request, Place $place)
     {
+        $file   = $request->file('main-poster');
+        $image  = !empty($file) ? time() . '.' . $file->getClientOriginalExtension() : null;
+
+        if (!empty($image))
+            $file->move($this->getImagePath(), $image);
+
         $place->fill($request->all());
         $place->save();
 
@@ -116,4 +120,19 @@ class PlaceController extends BaseAdminController
 
         return redirect()->back();
     }
+
+    /**
+     * Get Image Path
+     *
+     * @return string
+     */
+    private function getImagePath()
+    {
+        $path = public_path('images');
+        if (!is_dir($path))
+            mkdir($path, 0777);
+
+        return $path;
+    }
+
 }

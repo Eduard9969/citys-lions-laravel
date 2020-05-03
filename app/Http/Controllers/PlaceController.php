@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\Place;
 use Illuminate\Http\Request;
 
 class PlaceController extends Controller
@@ -9,11 +10,14 @@ class PlaceController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Place $place
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Place $place)
     {
-        //
+        $this->_assign('places', $place::paginate($this->list_item_count));
+
+        return view('place.list');
     }
 
     /**
@@ -21,10 +25,7 @@ class PlaceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
@@ -32,20 +33,19 @@ class PlaceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(Request $request) { /**/ }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Place $place
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Place $place)
     {
-        //
+        $this->_assign('place', $place);
+
+        return view('place.item');
     }
 
     /**
@@ -54,10 +54,7 @@ class PlaceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
+    public function edit($id) { /**/ }
 
     /**
      * Update the specified resource in storage.
@@ -66,10 +63,7 @@ class PlaceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    public function update(Request $request, $id) { /**/ }
 
     /**
      * Remove the specified resource from storage.
@@ -77,8 +71,5 @@ class PlaceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-    }
+    public function destroy($id) { /**/ }
 }

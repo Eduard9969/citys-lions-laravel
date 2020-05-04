@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Add new Place') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ !empty($place) ? route('admin.places.update', ['place' => $place->id]) : route('admin.places.store') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ !empty($place) ? route('admin.places.update', ['place' => $place->id]) : route('admin.places.store') }}" >
                             @csrf
 
                             @if(!empty($place))
@@ -51,20 +51,6 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                </div>
-                            </div>
-
-                            <div class="border-top mb-3"></div>
-
-                            <div class="form-group row">
-                                <label for="" class="col-md-4 col-form-label text-md-right">{{ __('Main Poster') }}</label>
-                                <div class="col-md-6">
-                                    <div class="custom-file">
-                                        <input type="file" name="main-poster" class="custom-file-input" id="mainImg" required>
-                                        <label class="custom-file-label" for="mainImg">{{ __('Choose Main Image...') }}</label>
-
-                                        <div class="invalid-feedback">Invalid Image Format</div>
-                                    </div>
                                 </div>
                             </div>
 

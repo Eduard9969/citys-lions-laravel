@@ -66,6 +66,11 @@ Route::group(['middleware' => 'auth.registed'], function () {
             ]
         ]);
 
+        Route::group(['prefix' => 'places', 'as' => 'places.images.'], function() {
+            Route::get('/{place}/images', 'Admin\PlaceController@attachImages')->name('attach');
+            Route::post('/{place}/images', 'Admin\PlaceController@storeImages')->name('store');
+        });
+
         Route::resource('users', 'Admin\UserController', [
             'names' => [
                 'index'     => 'users.list',

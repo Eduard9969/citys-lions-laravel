@@ -95,12 +95,6 @@ class PlaceController extends BaseAdminController
      */
     public function update(PlaceRequest $request, Place $place)
     {
-        $file   = $request->file('main-poster');
-        $image  = !empty($file) ? time() . '.' . $file->getClientOriginalExtension() : null;
-
-        if (!empty($image))
-            $file->move($this->getImagePath(), $image);
-
         $place->fill($request->all());
         $place->save();
 
@@ -122,15 +116,51 @@ class PlaceController extends BaseAdminController
     }
 
     /**
+     * Attach Images
+     *
+     * @param Place $place
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function attachImages(Place $place)
+    {
+        $this->_assign('place', $place);
+
+        return view('admin.places.images');
+    }
+
+    /**
+     * Store Images Place
+     *
+     * @param Request $request
+     * @param Place $place
+     */
+    public function storeImages(Request $request, Place $place)
+    {
+        $poster = $request['poster'] ?? [];
+
+        $main   = $poster['main'] && $poster['main'][0] ? $poster['main'][0] : [];
+        $other  = $poster['other'] ?? [];
+
+        $path   = $this->getImagePath('places' . '\\' . $place->id);
+
+        if(!empty($main))
+            $main->move($path, rand(1, 999999) . '.' . $main->getClientOriginalExtension());
+
+        foreach ($other as $item)
+            $item->move($path, rand(1, 999999) . '.' . $item->getClientOriginalExtension());
+    }
+
+    /**
      * Get Image Path
      *
+     * @param $type
      * @return string
      */
-    private function getImagePath()
+    private function getImagePath($type = '')
     {
-        $path = public_path('images');
+        $path = public_path('images' . (!empty($type) ? '\\' . $type : ''));
         if (!is_dir($path))
-            mkdir($path, 0777);
+            mkdir($path, 0777, true);
 
         return $path;
     }

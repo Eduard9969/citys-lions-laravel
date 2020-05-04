@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name', 255)->nullable();
             $table->string('last_name', 255)->nullable();
 
-            $table->string('email')->unique();
+            $table->string('email', 255)->unique();
             $table->timestamp('email_verified_at')->nullable();
 
             $table->tinyInteger('status_id')->default(1);

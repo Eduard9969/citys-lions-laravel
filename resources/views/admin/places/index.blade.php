@@ -18,13 +18,13 @@
                                 <th class="border-top-0" width="30%">{{ __('Description') }}</th>
                                 <th class="border-top-0" width="15%">{{ __('Features') }}</th>
                                 <th class="border-top-0" width="10%">{{ __('Status') }}</th>
-                                <th class="border-top-0" width="20%">{{ __('Created At') }}</th>
-                                <th class="border-top-0" width="10%"></th>
+                                <th class="border-top-0" width="15%">{{ __('Created At') }}</th>
+                                <th class="border-top-0" width="15%"></th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            @foreach ($places as $place)
+                            @forelse($places as $place)
                                 <tr>
                                     <td>{{ $place->name }}</td>
                                     <td>{{ \Illuminate\Support\Str::limit($place->description, 100, $end='...') }}</td>
@@ -37,6 +37,10 @@
                                                 {{ __('Edit') }}
                                             </a>
 
+                                            <a href="{{ route('admin.places.images.attach', ['place' => $place->id]) }}" class="d-block">
+                                                {{ __('Attach Images') }}
+                                            </a>
+
                                             <a href="#"  class="d-block" onclick="event.preventDefault();document.getElementById('delete-form-{{ $place->id }}').submit();">
                                                 {{ __('Delete') }}
                                             </a>
@@ -47,7 +51,13 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="6" align="center">
+                                        {{ __('Empty List') }}
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
 

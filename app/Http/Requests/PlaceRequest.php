@@ -26,7 +26,7 @@ class PlaceRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => 'min:10|max:255|required',
+            'name'          => 'min:5|max:255|required',
             'description'   => 'min:50|required',
             'status_id'     => 'required|integer|min:0'
         ];

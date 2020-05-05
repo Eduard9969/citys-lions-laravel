@@ -15,7 +15,14 @@ class PlaceController extends Controller
      */
     public function index(Place $place)
     {
-        $this->_assign('places', $place::paginate($this->list_item_count));
+        $places = $place::paginate($this->list_item_count);
+        foreach ($places as $key => $place)
+        {
+            $poster = $place->posters()->where('is_main', 1)->get()->toArray();
+            $places[$key]->main_poster = (isset($poster[0]) && isset($poster[0]['alias']) ? $poster[0]['alias'] : '');
+        }
+
+        $this->_assign('places', $places);
 
         return view('place.list');
     }
@@ -43,7 +50,21 @@ class PlaceController extends Controller
      */
     public function show(Place $place)
     {
-        $this->_assign('place', $place);
+        $posters     = $place->posters()->get()->toArray();
+        $main_poster = [];
+
+        foreach ($posters as $key => $poster)
+        {
+            if ($poster['is_main'])
+            {
+                unset($posters[$key]);
+                $main_poster = $poster;
+            }
+        }
+
+        $this->_assign('place',             $place);
+        $this->_assign('place_posters',     $posters);
+        $this->_assign('place_main_poster', $main_poster);
 
         return view('place.item');
     }

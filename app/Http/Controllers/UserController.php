@@ -44,6 +44,8 @@ class UserController extends Controller
      */
     public function settingsUpdate(SettingRequest $request)
     {
+        $without_password = $request->session()->get('without_password', false);
+
         $user = User::where('id', Auth::id())->firstOrFail();
         $user->fill($request->all());
         $user->save();
@@ -51,7 +53,28 @@ class UserController extends Controller
         $request->session()->remove('without_password');
         $request->session()->flash('message', __('Success Update'));
 
-        return redirect()->back();
+        return $without_password ? redirect()->to(route('user.user')) : redirect()->back();
     }
 
+    /**
+     * Settings Avatar
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function settingsAvatar(Request $request)
+    {
+        $this->_assign('user', Auth::user());
+
+        return view('auth.settings-avatar');
+    }
+
+    /**
+     * Settings Avatar Post
+     * @param Request $request
+     */
+    public function settingsAvatarUpdate(Request $request)
+    {
+
+    }
 }

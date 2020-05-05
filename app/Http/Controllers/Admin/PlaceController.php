@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Models\Place;
+use App\Http\Models\PlacePicture;
 use App\Http\Requests\PlaceRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redirect;
+use function GuzzleHttp\Psr7\uri_for;
 
 class PlaceController extends BaseAdminController
 {
@@ -133,21 +136,56 @@ class PlaceController extends BaseAdminController
      *
      * @param Request $request
      * @param Place $place
+     * @param PlacePicture $placePicture
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function storeImages(Request $request, Place $place)
+    public function storeImages(Request $request, Place $place, PlacePicture $placePicture)
     {
         $poster = $request['poster'] ?? [];
 
         $main   = $poster['main'] && $poster['main'][0] ? $poster['main'][0] : [];
         $other  = $poster['other'] ?? [];
 
-        $path   = $this->getImagePath('places' . '\\' . $place->id);
+        $path   = $this->getImagePath('places' . '/' . $place->id);
+
+        $fill   = [
+            'place_id'  => $place->id,
+            'alias'     => '',
+            'is_main'   => 0
+        ];
 
         if(!empty($main))
-            $main->move($path, rand(1, 999999) . '.' . $main->getClientOriginalExtension());
+        {
+            $main_fill            = $fill;
 
+            $main_fill['alias']   = rand(1, 999999) . '.' . $main->getClientOriginalExtension();
+            $main_fill['is_main'] = 1;
+
+            $placePicture->clearMainPoster($place->id);
+            $placePicture->fill($main_fill);
+            $placePicture->save();
+
+            $main->move($path, $main_fill['alias']);
+        }
+
+        $other_fill = [];
         foreach ($other as $item)
-            $item->move($path, rand(1, 999999) . '.' . $item->getClientOriginalExtension());
+        {
+            $tmp_fill = $fill;
+
+            $tmp_fill['alias']       = rand(1, 999999) . '.' . $item->getClientOriginalExtension();
+            $tmp_fill['created_at']  = $tmp_fill['updated_at'] = Carbon::now('utc')->toDateTimeString();
+
+            $other_fill[] = $tmp_fill;
+
+            $item->move($path, $tmp_fill['alias']);
+        }
+
+        if (!empty($other_fill))
+            $placePicture::insert($other_fill);
+
+        return redirect()->back();
     }
 
     /**
@@ -158,7 +196,7 @@ class PlaceController extends BaseAdminController
      */
     private function getImagePath($type = '')
     {
-        $path = public_path('images' . (!empty($type) ? '\\' . $type : ''));
+        $path = public_path('images' . (!empty($type) ? '/' . $type : ''));
         if (!is_dir($path))
             mkdir($path, 0777, true);
 

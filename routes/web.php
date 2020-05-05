@@ -42,6 +42,9 @@ Route::group(['middleware' => 'auth.registed'], function () {
         Route::group(['middleware' => 'auth'], function () {
             Route::get('settings', 'UserController@settings')->name('settings');
             Route::post('settings', 'UserController@settingsUpdate')->name('settings.post');
+
+            Route::get('settings/avatar', 'UserController@settingsAvatar')->name('settings.avatar');
+            Route::post('settings/avatar', 'UserController@settingsAvatarUpdate')->name('settings.avatar.post');
         });
 
         Route::get('/', function () { return redirect(

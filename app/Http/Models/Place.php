@@ -18,4 +18,14 @@ class Place extends Model
         'features',
         'status_id'
     ];
+
+    /**
+     * Get Place Posters
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posters()
+    {
+        return $this->hasMany('App\Http\Models\PlacePicture');
+    }
 }

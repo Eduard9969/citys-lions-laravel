@@ -16,7 +16,14 @@ class HomeController extends Controller
      */
     public function index(Place $place)
     {
-        $this->_assign('places', $place::where('status_id', 1)->limit(10)->get());
+        $places = $place::where('status_id', 1)->limit(10)->orderBy('created_at', 'desc')->get();
+        foreach ($places as $key => $item)
+        {
+            $poster = $item->posters()->where('is_main', 1)->get()->toArray();
+            $places[$key]->main_poster = (isset($poster[0]) && isset($poster[0]['alias']) ? $poster[0]['alias'] : '');
+        }
+
+        $this->_assign('places', $places);
 
         return view('home.index');
     }

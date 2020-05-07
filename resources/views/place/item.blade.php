@@ -64,6 +64,11 @@
                         <div class="col-12 pt-3">
                             {{ $place->description }}
                         </div>
+                        @if(!empty($place->features))
+                            <div class="col-12 pt-3">
+                                {{ __('Features') }}: {{ $place->features }}
+                            </div>
+                        @endif
                     </div>
                     <div class="card-footer bg-transparent">
                         <div class="row">
@@ -98,10 +103,44 @@
                         </ul>
                     </div>
                     <div class="card-body">
-                        @guest
-                            <p class="card-text text-muted">Comments can be written only by authorized users</p>
-                            <a href="{{ route('login') }}" class="btn btn-link py-0 border-0">{{ __('Login') }}</a>
-                        @endguest
+                        <div class="row">
+                            <div class="col-12">
+                                @if(!empty($comments))
+
+                                @else
+                                    <span class="d-block text-center text-muted">
+                                        No comments. Be the first to comment!
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 mt-5">
+                                @guest
+                                    <p class="card-text text-muted">Comments can be written only by authorized users</p>
+                                    <a href="{{ route('login') }}" class="btn btn-link py-0 border-0">{{ __('Login') }}</a>
+                                @else
+                                    <form action="{{ route('places.comments.store', ['place' => $place->id]) }}" method="POST">
+                                        @csrf()
+
+                                        <div class="form-group">
+                                            <textarea
+                                                required
+                                                placeholder="Your comment"
+                                                class="w-100 form-control"
+                                                name="comment"
+                                                id="comment"
+                                                rows="5"
+                                                style="min-height: 150px;max-height: 150px"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-info text-white">{{ __('Leave Comment') }}</button>
+                                        </div>
+                                    </form>
+                                @endguest
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

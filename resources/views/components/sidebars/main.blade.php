@@ -1,1 +1,1 @@
-Sidebar
+@widget('lastUsers')

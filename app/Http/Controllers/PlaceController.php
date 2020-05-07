@@ -62,9 +62,13 @@ class PlaceController extends Controller
             }
         }
 
+        $comments = $place->comments()->get()->toArray();
+
         $this->_assign('place',             $place);
         $this->_assign('place_posters',     $posters);
         $this->_assign('place_main_poster', $main_poster);
+
+        $this->_assign('comments', $comments);
 
         return view('place.item');
     }

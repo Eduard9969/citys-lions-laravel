@@ -188,19 +188,4 @@ class PlaceController extends BaseAdminController
         return redirect()->back();
     }
 
-    /**
-     * Get Image Path
-     *
-     * @param $type
-     * @return string
-     */
-    private function getImagePath($type = '')
-    {
-        $path = public_path('images' . (!empty($type) ? '/' . $type : ''));
-        if (!is_dir($path))
-            mkdir($path, 0777, true);
-
-        return $path;
-    }
-
 }

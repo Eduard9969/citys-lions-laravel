@@ -30,6 +30,10 @@ Route::group(['middleware' => 'auth.registed'], function () {
         'show'  => 'places.show'
     ]);
 
+    Route::group(['prefix' => '/places/comments', 'as' => 'places.comments.' ], function () {
+        Route::post('/{place}', 'CommentController@store')->name('store');
+    });
+
     /**
      * Guides
      */

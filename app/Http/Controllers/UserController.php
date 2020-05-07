@@ -17,6 +17,7 @@ class UserController extends Controller
      */
     public function user(User $user)
     {
+        $user['roles'] = $user->roles;
         $this->_assign('user', $user->toArray());
 
         return view('auth.user');
@@ -64,7 +65,7 @@ class UserController extends Controller
      */
     public function settingsAvatar(Request $request)
     {
-        $this->_assign('user', Auth::user());
+        $this->_assign('user', Auth::user()->toArray());
 
         return view('auth.settings-avatar');
     }
@@ -72,9 +73,24 @@ class UserController extends Controller
     /**
      * Settings Avatar Post
      * @param Request $request
+     * @param User $user
      */
-    public function settingsAvatarUpdate(Request $request)
+    public function settingsAvatarUpdate(Request $request, User $user)
     {
+        $avatar = $request->file('avatar');
+        $user = User::find(Auth::id());
 
+        if (empty($user->toArray()) || empty($avatar))
+            return redirect()->back();
+
+        $alias = rand(1, 999999) . $avatar->getClientOriginalExtension();
+
+        $user->avatar_alias = $alias;
+        $user->save();
+
+        $path = $this->getImagePath('user_pic/' . $user->id);
+        $avatar->move($path, $alias);
+
+        return redirect()->to(route('user.user'));
     }
 }

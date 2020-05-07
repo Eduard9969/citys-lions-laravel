@@ -5,12 +5,18 @@
         <div class="row">
             <div class="col-3 card align-items-center p-3">
                 <div class="avatar position-relative overflow-hidden rounded-circle bg-light text-center" style="width: 150px;height:150px;">
-                    <a href="{{ route('user.settings.avatar') }}"
-                       title="{{ $user['first_name'] . ' ' . $user['last_name'] }}"
-                       class="position-absolute"
-                       style="left: 50%;top:50%;transform: translate(-50%, -50%);">
-                        {{ __('Choose avatar') }}
-                    </a>
+                    @if(!isset($user['avatar_alias']) || empty($user['avatar_alias']))
+                        <a href="{{ route('user.settings.avatar') }}"
+                           title="{{ $user['first_name'] . ' ' . $user['last_name'] }}"
+                           class="position-absolute"
+                           style="left: 50%;top:50%;transform: translate(-50%, -50%);">
+                            {{ __('Choose avatar') }}
+                        </a>
+                    @else
+                        <img src="{{ asset('images/user_pic/' . $user['id'] . '/' . $user['avatar_alias']) }}"
+                             class="position-absolute"
+                             style="left: 50%;top:50%;transform: translate(-50%, -50%);width: 100%;min-height: 100%">
+                    @endif
                 </div>
             </div>
             <div class="col-9 card">
@@ -24,6 +30,16 @@
                             <tr>
                                 <td>{{ __('Last Name') }}:</td>
                                 <td class="pl-3">{{ $user['last_name'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ __('Role') }}:</td>
+                                <td class="pl-3">
+                                    @if(!empty($user['roles']))
+                                        @foreach($user['roles'] as $user_role)
+                                            {{ $user_role['name'] }} @if($loop->index > 0), @endif
+                                        @endforeach
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <td>{{ __('Email') }}:</td>

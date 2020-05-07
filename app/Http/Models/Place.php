@@ -28,4 +28,14 @@ class Place extends Model
     {
         return $this->hasMany('App\Http\Models\PlacePicture');
     }
+
+    /**
+     * Get Place Comments
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Http\Models\PlaceComment');
+    }
 }

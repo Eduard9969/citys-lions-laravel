@@ -91,4 +91,19 @@ class Controller extends BaseController
     {
         return $this->_assign('user_login', $this->user_login);
     }
+
+    /**
+     * Get Image Path
+     *
+     * @param $type
+     * @return string
+     */
+    protected function getImagePath($type = '')
+    {
+        $path = public_path('images' . (!empty($type) ? '/' . $type : ''));
+        if (!is_dir($path))
+            mkdir($path, 0777, true);
+
+        return $path;
+    }
 }

@@ -23,9 +23,10 @@ class LastUsers extends AbstractWidget
     public function run(User $user)
     {
         $users = $user->where('status_id', 1)
+                    ->where('first_name', '!=', null)
                     ->limit(10)
                     ->orderBy('id', 'desc')
-                    ->get(['id', 'login', 'first_name', 'last_name'])
+                    ->get(['id', 'login', 'first_name', 'last_name', 'avatar_alias'])
                     ->toArray();
 
         return view('widgets.last_users', [

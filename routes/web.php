@@ -73,6 +73,18 @@ Route::group(['middleware' => 'auth.registed'], function () {
             ]
         ]);
 
+        Route::resource('comments', 'Admin\CommentController', [
+            'names' => [
+                'index'     => 'comments.list',
+                'create'    => 'comments.create',
+                'store'     => 'comments.store',
+                'show'      => 'comments.item',
+                'edit'      => 'comments.edit',
+                'update'    => 'comments.update',
+                'destroy'   => 'comments.delete',
+            ]
+        ]);
+
         Route::group(['prefix' => 'places', 'as' => 'places.images.'], function() {
             Route::get('/{place}/images', 'Admin\PlaceController@attachImages')->name('attach');
             Route::post('/{place}/images', 'Admin\PlaceController@storeImages')->name('store');

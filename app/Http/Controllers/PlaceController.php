@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Models\Place;
+use App\Http\Models\User;
 use Illuminate\Http\Request;
 
 class PlaceController extends Controller
@@ -62,7 +63,10 @@ class PlaceController extends Controller
             }
         }
 
-        $comments = $place->comments()->get()->toArray();
+        $comments = $place->comments()
+                        ->join('users', 'place_comments.user_id', '=', 'users.id')
+                        ->get()
+                        ->toArray();
 
         $this->_assign('place',             $place);
         $this->_assign('place_posters',     $posters);

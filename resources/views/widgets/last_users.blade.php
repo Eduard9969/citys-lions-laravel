@@ -10,7 +10,7 @@
                     <tbody>
                         @foreach($users as $user)
                             <tr>
-                                <td class="{{ $loop->first ? 'border-top-0' : ''  }}">
+                                <td class="px-0 {{ $loop->first ? 'border-top-0' : ''  }}">
                                     <a href="{{ route('user.profile', ['user' => $user['id']]) }}" class="text-decoration-none">
                                         <div class="d-inline-block align-middle avatar position-relative overflow-hidden rounded-circle bg-light text-center"
                                            style="width: 25px;height:25px;"

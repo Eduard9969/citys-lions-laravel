@@ -54,9 +54,15 @@
 
                     @if($user['id'] == $user_id)
                         <div class="btn-group-sm mt-3">
-                            <a href="{{ route('user.settings') }}" class="btn btn-success btn-sm">{{ __('Edit Information') }}</a>
-                            <a href="{{ route('user.settings.avatar') }}" class="btn btn-info btn-sm text-white">{{ __('Edit Avatar') }}</a>
-                            <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary btn-sm">{{ __('Admin Area') }}</a>
+                            <a href="{{ route('user.settings') }}" class="btn btn-success btn-sm">
+                                {{ __('Edit Information') }}
+                            </a>
+                            <a href="{{ route('user.settings.avatar') }}" class="btn btn-info btn-sm text-white">
+                                {{ __('Edit Avatar') }}
+                            </a>
+                            <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary btn-sm">
+                                {{ __('Admin Area') }}
+                            </a>
                         </div>
                     @endif
                 </div>
@@ -64,9 +70,28 @@
         </div>
 
         <div class="row mt-4">
-            <div class="card col-12">
-                <div class="card-body">
-                    ...
+            <div class="card col-12 p-0">
+                <div class="card-header">
+                    <span>{{ __('Last User Comments') }}</span>
+                </div>
+                <div class="card-body px-2">
+                    @if(!empty($comments))
+                        <table class="table">
+                            @foreach($comments as $comment)
+                                <tr>
+                                    <td @if($loop->first) class="border-top-0" @endif>
+                                        <a class="text-body" href="{{ route('places.show', ['place' => $comment['place_id']]) }}">
+                                            {{ \Illuminate\Support\Str::limit($comment['comment'], 150, $end='...') }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    @else
+                        <span class="d-block text-center">
+                            {{ __('No Data') }}
+                        </span>
+                    @endif
                 </div>
             </div>
         </div>

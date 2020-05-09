@@ -31,11 +31,21 @@ class Place extends Model
 
     /**
      * Get Place Comments
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function comments()
     {
         return $this->hasMany('App\Http\Models\PlaceComment');
+    }
+
+    /**
+     * Get Place Ratings
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function rating()
+    {
+        return $this->hasMany('App\Http\Models\PlaceRating');
     }
 }

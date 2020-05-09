@@ -30,6 +30,18 @@ Route::group(['middleware' => 'auth.registed'], function () {
         'show'  => 'places.show'
     ]);
 
+    Route::resource('places/rating', 'RatingController', [
+        'names' => [
+            'index'     => 'places.rating.list',
+            'create'    => 'places.rating.create',
+            'store'     => 'places.rating.store',
+            'show'      => 'places.rating.item',
+            'edit'      => 'places.rating.edit',
+            'update'    => 'places.rating.update',
+            'destroy'   => 'places.rating.delete',
+        ]
+    ]);
+
     Route::group(['prefix' => '/places/comments', 'as' => 'places.comments.' ], function () {
         Route::post('/{place}', 'CommentController@store')->name('store');
     });

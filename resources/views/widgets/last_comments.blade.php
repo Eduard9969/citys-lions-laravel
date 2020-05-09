@@ -10,7 +10,7 @@
             <tbody>
             @foreach($comments as $comment)
                 <tr>
-                    <td class="{{ $loop->first ? 'border-top-0' : ''  }}">
+                    <td class="px-0 {{ $loop->first ? 'border-top-0' : ''  }}">
                         <span class="d-block">
                             <a href="{{ route('places.show', ['place' => $comment['place_id']]) }}" class="text-black">
                                 {{ \Illuminate\Support\Str::limit($comment['comment'], 25, $end='...') }}

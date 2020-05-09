@@ -31,11 +31,11 @@
 
                             <a class="carousel-control-prev" href="#carouselSliderPosters" role="button" data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
+                                <span class="sr-only">{{ __('Previous') }}</span>
                             </a>
                             <a class="carousel-control-next" href="#carouselSliderPosters" role="button" data-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
+                                <span class="sr-only">{{ __('Next') }}</span>
                             </a>
                         </div>
                     @endif
@@ -71,9 +71,7 @@
                                 </span>
                             </div>
                             <div class="col-6 text-right">
-                                <span class="px-2 text-success">@include('icons.arrow-up')</span>
-                                <span class="px-2 text-muted">0</span>
-                                <span class="px-2 text-danger">@include('icons.arrow-down')</span>
+                                @include('components.forms.place-rating', ['rating' => $rating, 'place_id' => $place->id])
                             </div>
                         </div>
                     </div>
@@ -99,38 +97,7 @@
                         <div class="row">
                             <div class="col-12">
                                 @if(!empty($comments))
-                                    <div class="row">
-                                        @foreach($comments as $comment)
-                                            <div class="col-12 mb-3">
-                                                <div class="row">
-                                                    <div class="col-12 col-md-1">
-                                                        <a href="{{ route('user.profile', ['user' => $comment['user_id']]) }}"
-                                                           class="d-block avatar position-relative overflow-hidden rounded-circle bg-light text-center"
-                                                           style="width: 50px;height:50px;"
-                                                           title="{{ $comment['first_name'] . ' ' . $comment['last_name'] }}"
-                                                        >
-                                                            <img @if(isset($comment['avatar_alias']) && !empty($comment['avatar_alias'])) src="{{ asset('images/user_pic/' . $comment['user_id'] . '/' . $comment['avatar_alias']) }}" @endif
-                                                                 class="position-absolute"
-                                                                 style="left: 50%;top:50%;transform: translate(-50%, -50%);width: 100%;min-height: 100%">
-                                                        </a>
-                                                    </div>
-                                                    <div class="col-12 col-md-11">
-                                                        <div class="card rounded p-3">
-                                                            <div class="card-body py-0">
-                                                                {{ $comment['comment'] }}
-
-                                                                <div class="small mt-1">
-                                                                    - <a href="{{ route('user.profile', ['user' => $comment['user_id']]) }}" title="{{ $comment['first_name'] . ' ' . $comment['last_name'] }}">
-                                                                         {{ $comment['first_name'] . ' ' . $comment['last_name'] }}
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
+                                    @include('components.list.comments', ['comments' => $comments])
                                 @else
                                     <div class="alert alert-warning d-block text-center text-muted">
                                         No comments. Be the first to comment!
@@ -145,23 +112,7 @@
                                     <p class="card-text text-muted">Comments can be written only by authorized users</p>
                                     <a href="{{ route('login') }}" class="btn btn-link py-0 border-0">{{ __('Login') }}</a>
                                 @else
-                                    <form action="{{ route('places.comments.store', ['place' => $place->id]) }}" method="POST">
-                                        @csrf()
-
-                                        <div class="form-group">
-                                            <textarea
-                                                required
-                                                placeholder="Your comment"
-                                                class="w-100 form-control"
-                                                name="comment"
-                                                id="comment"
-                                                rows="5"
-                                                style="min-height: 150px;max-height: 150px"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-info text-white">{{ __('Leave Comment') }}</button>
-                                        </div>
-                                    </form>
+                                    @include('components.forms.comment-add', ['place' => $place])
                                 @endguest
                             </div>
                         </div>

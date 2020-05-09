@@ -18,7 +18,10 @@ class UserController extends Controller
     public function user(User $user)
     {
         $user['roles'] = $user->roles;
+        $comments      = $user->placeComments()->orderBy('created_at', 'desc')->get(['comment', 'place_id', 'created_at']);
+
         $this->_assign('user', $user->toArray());
+        $this->_assign('comments', $comments->toArray());
 
         return view('auth.user');
     }

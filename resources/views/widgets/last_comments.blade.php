@@ -1,4 +1,3 @@
-@if(!empty($comments))
 <div class="card mb-3">
 
     <div class="card-header">
@@ -8,7 +7,7 @@
     <div class="card-body py-0">
         <table class="table">
             <tbody>
-            @foreach($comments as $comment)
+            @forelse($comments as $comment)
                 <tr>
                     <td class="px-0 {{ $loop->first ? 'border-top-0' : ''  }}">
                         <span class="d-block">
@@ -23,9 +22,14 @@
                         </span>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td>
+                        {{ __('No Data') }}
+                    </td>
+                </tr>
+            @endforelse
             </tbody>
         </table>
     </div>
 </div>
-@endif

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\Place;
 use App\Http\Models\User;
 use App\Http\Requests\SettingRequest;
 use Illuminate\Http\Request;
@@ -13,15 +14,25 @@ class UserController extends Controller
     /**
      * User Get
      * @param User $user
+     * @param Place $place
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function user(User $user)
+    public function user(User $user, Place $place)
     {
         $user['roles'] = $user->roles;
-        $comments      = $user->placeComments()->orderBy('created_at', 'desc')->get(['comment', 'place_id', 'created_at']);
 
-        $this->_assign('user', $user->toArray());
-        $this->_assign('comments', $comments->toArray());
+        $comments = $user->placeComments()
+                        ->orderBy('id', 'desc')
+                        ->get(['comment', 'place_id', 'created_at']);
+
+        $rating   = $user->placeRating()
+                        ->join($place->getTable(), 'places.id', '=', 'place_id')
+                        ->orderBy('place_ratings.id', 'desc')
+                        ->get(['places.name', 'place_ratings.*']);
+
+        $this->_assign('user',      $user->toArray());
+        $this->_assign('comments',  $comments->toArray());
+        $this->_assign('ratings',   $rating->toArray());
 
         return view('auth.user');
     }

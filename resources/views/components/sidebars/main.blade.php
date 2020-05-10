@@ -2,4 +2,5 @@
     @widget('lastUsers')
     @widget('suggestPlace')
     @widget('lastComments')
+    @widget('lastRatings')
 </div>

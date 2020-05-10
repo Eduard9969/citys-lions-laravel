@@ -79,28 +79,49 @@
                         <span>{{ __('Last suggested places') }}</span>
                     </div>
                     <div class="card-body p-2">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="border-top-0">{{ __('Name') }}</th>
-                                    <th class="border-top-0">{{ __('Description') }}</th>
-                                    <th class="border-top-0">{{ __('Images') }}</th>
-                                    <th class="border-top-0"></th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                @if(!empty($suggest))
-
-                                @else
+                        @if(!empty($suggest))
+                            <table class="table">
+                                <thead>
                                     <tr>
-                                        <td class="text-center" colspan="4">
-                                            {{ __('No places offered') }}
-                                        </td>
+                                        <th class="border-top-0">{{ __('Name') }}</th>
+                                        <th class="border-top-0">{{ __('Description') }}</th>
+{{--                                        <th class="border-top-0">{{ __('Features') }}</th>--}}
+                                        <th class="border-top-0 text-center">{{ __('User Proposed') }}</th>
+                                        <th class="border-top-0 text-center">{{ __('Created At') }}</th>
+                                        <th class="border-top-0"></th>
                                     </tr>
-                                @endif
-                            </tbody>
-                        </table>
+                                </thead>
+
+                                <tbody>
+                                    @foreach($suggest as $item)
+                                        <tr>
+                                            <td width="15%" class="text-break">{{ $item['name'] }}</td>
+                                            <td width="40%" class="text-break">
+                                                {{ \Illuminate\Support\Str::limit($item['description'], 125, $end='...') }}
+                                            </td>
+{{--                                            <td width="20%" class="text-break">--}}
+{{--                                                {{ $item['features'] }}--}}
+{{--                                            </td>--}}
+                                            <td width="15%" class="text-center">
+                                                <a target="_blank" href="{{ route('user.profile', ['user' => $item['user_id']]) }}">
+                                                    {{ $item['first_name'] . ' ' . $item['last_name'] }}
+                                                </a>
+                                            </td>
+                                            <td width="15%" class="text-center">
+                                                {{ date('Y-m-d H:i', strtotime($item['created_at'])) }}
+                                            </td>
+                                            <td width="10%" class="text-center">
+                                                <a href="">{{ __('View') }}</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            <span class="d-block w-100 text-center">
+                                {{ __('No places suggest') }}
+                            </span>
+                        @endif
                     </div>
                 </div>
             </div>

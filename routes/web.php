@@ -46,6 +46,11 @@ Route::group(['middleware' => 'auth.registed'], function () {
         Route::post('/{place}', 'CommentController@store')->name('store');
     });
 
+    Route::group(['prefix' => '/places/suggest', 'as' => 'places.suggest.', 'middleware' => 'auth'], function () {
+        Route::get('/create', 'SuggestController@create')->name('create');
+        Route::post('/create', 'SuggestController@store')->name('store');
+    });
+
     /**
      * Guides
      */

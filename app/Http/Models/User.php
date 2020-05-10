@@ -43,8 +43,33 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Place Comment By User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function placeComments()
     {
         return $this->hasMany('App\Http\Models\PlaceComment');
+    }
+
+    /**
+     * Place Rating By User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function placeRating()
+    {
+        return $this->hasMany('App\Http\Models\PlaceRating');
+    }
+
+    /**
+     * Place Suggest By User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function placeSuggest()
+    {
+        return $this->hasMany('App\Http\Models\Suggest');
     }
 }

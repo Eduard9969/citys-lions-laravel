@@ -17,5 +17,18 @@
         <a class="dropdown-item" href="{{ route('admin.places.images.attach', ['place' => $place->id]) }}">
             {{ __('Edit Images') }}
         </a>
+
+        @if($place->status_id == 1)
+            <div class="dropdown-divider"></div>
+
+            <a class="dropdown-item" href="{{ route('admin.places.delete', ['place' => $place->id]) }}"
+               onclick="event.preventDefault();document.getElementById('delete-place-form').submit();">
+                {{ __('Delete Place') }}
+            </a>
+            <form id="delete-place-form" action="{{ route('admin.places.delete', ['place' => $place->id]) }}" method="POST" style="display: none;">
+                @csrf()
+                @method('DELETE')
+            </form>
+        @endif
     </div>
 </div>

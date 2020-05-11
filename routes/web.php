@@ -118,6 +118,22 @@ Route::group(['middleware' => 'auth.registed'], function () {
                 'delete'    => 'users.delete',
             ]
         ]);
+
+        Route::resource('suggest', 'Admin\SuggestController', [
+            'names' => [
+                'index'     => 'suggest.list',
+                'create'    => 'suggest.create',
+                'store'     => 'suggest.store',
+                'show'      => 'suggest.item',
+                'edit'      => 'suggest.edit',
+                'update'    => 'suggest.update',
+                'destroy'   => 'suggest.delete',
+            ]
+        ]);
+
+        Route::group(['prefix' => 'suggest'], function () {
+            Route::post('/{suggest}/answer', 'Admin\SuggestController@answer')->name('suggest.answer');
+        });
     });
 
     /**

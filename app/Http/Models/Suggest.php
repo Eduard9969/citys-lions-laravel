@@ -25,4 +25,14 @@ class Suggest extends Model
         'features',
         'status_id'
     ];
+
+    /**
+     * Get Author
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function author()
+    {
+        return $this->belongsToMany('App\Http\Models\User', 'place_proposals', 'user_id', 'id');
+    }
 }

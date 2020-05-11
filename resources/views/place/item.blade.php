@@ -40,6 +40,13 @@
                         </div>
                     @endif
                     <div class="card-body px-2">
+                        @if(!empty($archive))
+                            <div class="col-12">
+                                <span class="alert alert-danger d-block w-100">
+                                    {{ __('This place is in the archive and is available for viewing only by administrators') }}
+                                </span>
+                            </div>
+                        @endif
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-10">

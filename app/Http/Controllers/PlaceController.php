@@ -18,7 +18,7 @@ class PlaceController extends Controller
      */
     public function index(Place $place)
     {
-        $places = $place::paginate($this->list_item_count);
+        $places = $place::where('status_id', 1)->paginate($this->list_item_count);
         foreach ($places as $key => $place)
         {
             $poster = $place->posters()->where('is_main', 1)->get()->toArray();
@@ -53,6 +53,14 @@ class PlaceController extends Controller
      */
     public function show(Place $place)
     {
+        if (!$place->status_id)
+        {
+            if (!Auth::user()->isAdmin())
+                return redirect()->to(route('places.list'));
+
+            $this->_assign('archive', true);
+        }
+
         $posters     = $place->posters()->get()->toArray();
         $main_poster = [];
 

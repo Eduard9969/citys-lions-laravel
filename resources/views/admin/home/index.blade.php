@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="col-4">
-                        <a href="{{ route('admin.users.list') }}" class="card">
+                        <a href="{{ route('admin.users.list') }}" class="card bg-light">
                             <div class="card-body py-2 text-center">
                                 <span class="btn text-black border-0">
                                     {{ __('Users') }}
@@ -40,7 +40,7 @@
             <div class="col-12 mt-4">
                 <div class="row">
                     <div class="col-4">
-                        <a href="{{ route('admin.comments.list') }}" class="card">
+                        <a href="{{ route('admin.comments.list') }}" class="card bg-light">
                             <div class="card-body py-2 text-center">
                                 <span class="btn text-black border-0">
                                     {{ __('Comments') }}
@@ -50,7 +50,7 @@
                     </div>
 
                     <div class="col-4">
-                        <a href="{{ route('admin.places.list') }}" class="card">
+                        <a href="{{ route('admin.suggest.list') }}" class="card">
                             <div class="card-body py-2 text-center">
                                 <span class="btn text-black border-0">
                                     {{ __('Suggested places') }}
@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="col-4">
-                        <a href="{{ route('admin.users.list') }}" class="card">
+                        <a href="{{ route('admin.users.list') }}" class="card bg-light">
                             <div class="card-body py-2 text-center">
                                 <span class="btn text-black border-0">
                                     {{ __('Guides') }}
@@ -85,7 +85,6 @@
                                     <tr>
                                         <th class="border-top-0">{{ __('Name') }}</th>
                                         <th class="border-top-0">{{ __('Description') }}</th>
-{{--                                        <th class="border-top-0">{{ __('Features') }}</th>--}}
                                         <th class="border-top-0 text-center">{{ __('User Proposed') }}</th>
                                         <th class="border-top-0 text-center">{{ __('Created At') }}</th>
                                         <th class="border-top-0"></th>
@@ -99,9 +98,6 @@
                                             <td width="40%" class="text-break">
                                                 {{ \Illuminate\Support\Str::limit($item['description'], 125, $end='...') }}
                                             </td>
-{{--                                            <td width="20%" class="text-break">--}}
-{{--                                                {{ $item['features'] }}--}}
-{{--                                            </td>--}}
                                             <td width="15%" class="text-center">
                                                 <a target="_blank" href="{{ route('user.profile', ['user' => $item['user_id']]) }}">
                                                     {{ $item['first_name'] . ' ' . $item['last_name'] }}
@@ -111,14 +107,14 @@
                                                 {{ date('Y-m-d H:i', strtotime($item['created_at'])) }}
                                             </td>
                                             <td width="10%" class="text-center">
-                                                <a href="">{{ __('View') }}</a>
+                                                <a href="{{ route('admin.suggest.item', ['suggest' => $item['id']]) }}">{{ __('View') }}</a>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         @else
-                            <span class="d-block w-100 text-center">
+                            <span class="d-block w-100 my-3 text-center">
                                 {{ __('No places suggest') }}
                             </span>
                         @endif

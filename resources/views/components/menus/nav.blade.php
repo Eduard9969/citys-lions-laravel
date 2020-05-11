@@ -9,33 +9,40 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav mr-auto">
-
-            </ul>
-
-            <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ml-auto">
-                @if(empty($admin_area))
+            <!-- Center Side Of Navbar -->
+            @if(empty($admin_area))
+                <ul class="navbar-nav w-100 text-center mr-auto justify-content-center d-none d-md-flex">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('places.list') }}">{{ __('Places') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-success" href="{{ route('places.suggest.create') }}">{{ __('Suggest Place') }}</a>
                     </li>
+                </ul>
+            @endif
 
-                    <li class="mr-md-5"></li>
+            <!-- Right Side Of Navbar -->
+            <ul class="navbar-nav ml-auto">
+                @if(empty($admin_area))
+                    <li class="nav-item d-md-none">
+                        <a class="nav-link" href="{{ route('places.list') }}">{{ __('Places') }}</a>
+                    </li>
+                    <li class="nav-item d-md-none">
+                        <a class="nav-link text-success" href="{{ route('places.suggest.create') }}">{{ __('Suggest Place') }}</a>
+                    </li>
+
+                    <li class="mr-md-5 d-md-none"></li>
                 @endif
 
                 @guest
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    </li>
+                    @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                    @endif
+                  @endif
                 @else
                     <!-- Authentication Links -->
                     <li class="nav-item dropdown">

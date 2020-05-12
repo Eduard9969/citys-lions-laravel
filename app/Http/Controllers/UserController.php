@@ -19,7 +19,8 @@ class UserController extends Controller
      */
     public function user(User $user, Place $place)
     {
-        $user['roles'] = $user->roles;
+        $user['roles']      = $user->roles;
+        $user['isAdmin']    = $user->isAdmin();
 
         $comments = $user->placeComments()
                         ->orderBy('id', 'desc')

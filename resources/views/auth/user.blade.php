@@ -61,9 +61,11 @@
                                 <a href="{{ route('user.settings.avatar') }}" class="btn btn-info btn-sm text-white">
                                     {{ __('Edit Avatar') }}
                                 </a>
-                                <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary btn-sm">
-                                    {{ __('Admin Area') }}
-                                </a>
+                                @if(!empty($user['isAdmin']))
+                                    <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary btn-sm">
+                                        {{ __('Admin Area') }}
+                                    </a>
+                                @endif
                             </div>
                         @endif
                     </div>

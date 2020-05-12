@@ -18,7 +18,7 @@ class CreatePlacesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 255);
             $table->text('description');
-            $table->string('features', 100);
+            $table->string('features', 100)->nullable(true);
             $table->tinyInteger('status_id');
             $table->timestamps();
         });

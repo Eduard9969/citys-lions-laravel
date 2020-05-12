@@ -92,7 +92,7 @@
                                 </tbody>
                             </table>
                         @else
-                            <span class="text-center w-100 d-block">
+                            <span class="text-center w-100 d-block py-3">
                                 {{ __('You have no suggested places') }}
                             </span>
                         @endif

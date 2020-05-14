@@ -54,7 +54,7 @@
                                         {{ $place->name }}
                                     </span>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-2 d-print-none">
                                     @role('admin')
                                         @include('components.actions.admin.action-place', ['place' => $place])
                                     @endrole
@@ -72,8 +72,12 @@
                     </div>
                     <div class="card-footer bg-transparent">
                         <div class="row">
-                            <div class="col-6 text-muted small">
-                                <span>
+                            <div class="col-6 text-muted">
+                                <span class="d-print-none small">
+                                    {{ __('Created') }}: {{ $place->created_at }}
+                                </span>
+
+                                <span class="d-none d-print-inline-block">
                                     {{ __('Created') }}: {{ $place->created_at }}
                                 </span>
                             </div>
@@ -85,7 +89,7 @@
                 </div>
             </div>
 
-            <div class="col-12 pt-3">
+            <div class="col-12 pt-3 d-print-none">
                 <div class="card text-center">
                     <div class="card-header bg-transparent">
                         <ul class="nav nav-tabs card-header-tabs">
@@ -93,10 +97,10 @@
                                 <a class="nav-link active" href="#">{{ __('Comments') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" onclick="window.print()">{{ __('Print this place') }}</a>
+                                <a class="nav-link d-print-none" href="#" onclick="window.print()">{{ __('Print this place') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link disabled" href="#">{{ __('Share') }}</a>
+                                <a class="nav-link d-print-none disabled" href="#">{{ __('Share') }}</a>
                             </li>
                         </ul>
                     </div>
@@ -107,13 +111,14 @@
                                     @include('components.list.comments', ['comments' => $comments])
                                 @else
                                     <div class="alert alert-warning d-block text-center text-muted">
-                                        No comments. Be the first to comment!
+                                        <span class="d-print-none">No comments. Be the first to comment!</span>
+                                        <span class="d-print-block">No comments.</span>
                                     </div>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row d-print-none">
                             <div class="col-12 mt-3">
                                 @guest
                                     <p class="card-text text-muted">Comments can be written only by authorized users</p>

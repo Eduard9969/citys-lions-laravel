@@ -62,7 +62,7 @@
                             </div>
                         </div>
                         <div class="col-12 pt-3">
-                            {{ $place->description }}
+                            @nl2br_text($place->description)
                         </div>
                         @if(!empty($place->features))
                             <div class="col-12 pt-3">

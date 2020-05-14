@@ -18,7 +18,7 @@ class PlaceController extends Controller
      */
     public function index(Place $place)
     {
-        $places = $place::where('status_id', 1)->paginate($this->list_item_count);
+        $places = $place::where('status_id', 1)->orderBy('created_at', 'desc')->paginate($this->list_item_count);
         foreach ($places as $key => $place)
         {
             $poster = $place->posters()->where('is_main', 1)->get()->toArray();

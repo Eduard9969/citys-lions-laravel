@@ -28,6 +28,7 @@ class LastRatings extends AbstractWidget
         $ratings = $placeRating->join($place->getTable(), 'places.id', '=', 'place_id')
                                 ->join($user->getTable(), 'users.id', '=', 'user_id')
                                 ->orderBy('place_ratings.id', 'desc')
+                                ->limit(5)
                                 ->get(['places.name', 'users.first_name', 'users.last_name', 'place_ratings.*']);
 
         return view('widgets.last_ratings', [

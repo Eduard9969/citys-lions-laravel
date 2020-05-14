@@ -31,7 +31,7 @@ class PlaceController extends BaseAdminController
         foreach ($places_statuses as $key => $places_status)
             $statuses[$places_status] = $key;
 
-        $places = $place::where('status_id', $status_id)->paginate($this->list_item_count);
+        $places = $place::where('status_id', $status_id)->orderBy('created_at', 'desc')->paginate($this->list_item_count);
 
         $this->_assign('places_statuses', $statuses);
         $this->_assign('places', $places);

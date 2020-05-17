@@ -20,7 +20,7 @@ class CreatePlaceProposals extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->string('name', 255);
             $table->text('description');
-            $table->string('features')->nullable(true);
+            $table->string('features', 255)->nullable(true);
             $table->tinyInteger('status_id')->default(0);
 
             $table->timestamps();

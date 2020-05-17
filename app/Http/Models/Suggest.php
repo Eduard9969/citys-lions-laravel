@@ -33,6 +33,6 @@ class Suggest extends Model
      */
     public function author()
     {
-        return $this->belongsToMany('App\Http\Models\User', 'place_proposals', 'user_id', 'id');
+        return $this->belongsToMany('App\Http\Models\User', 'users', 'user_id', 'id');
     }
 }

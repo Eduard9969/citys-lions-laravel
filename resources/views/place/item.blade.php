@@ -5,8 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="card w-100">
-                    @if(!empty($place_main_poster) || !empty($posters))
-
+                    @if(empty(true) && !empty($place_main_poster) || !empty($posters))
                         <div id="carouselSliderPosters" class="carousel slide"
                              style="max-height: 300px;overflow: hidden" data-ride="carousel">
                             <div class="carousel-inner">
@@ -37,6 +36,13 @@
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="sr-only">{{ __('Next') }}</span>
                             </a>
+                        </div>
+                    @endif
+                    @if(!empty($place_main_poster))
+                        <div class="card-img-top-wrap">
+                            <img class="card-img-top"
+                                 src="{{ asset('images/places/' . $place->id . '/' . $place_main_poster['alias']) }}"
+                                 alt="{{ $place->name }}" >
                         </div>
                     @endif
                     <div class="card-body px-2">
@@ -88,6 +94,32 @@
                     </div>
                 </div>
             </div>
+
+            @if(!empty($place_main_poster) || !empty($posters))
+            <div class="col-12 mt-3">
+                <div class="card py-3 px-1">
+                    <div class="posters_place">
+                        @if(!empty($place_main_poster))
+                            <div class="col-12 active">
+                                <a class="poster_place-thumb" data-fancybox="gallery" href="{{ asset('images/places/' . $place->id . '/' . $place_main_poster['alias']) }}">
+                                    <img class="img-fluid" src="{{ asset('images/places/' . $place->id . '/' . $place_main_poster['alias']) }}" alt="{{ $place->name }}">
+                                </a>
+                            </div>
+                        @endif
+
+                        @if(!empty($place_posters))
+                            @foreach($place_posters as $poster)
+                                <div class="col-12 {{ ($loop->first && empty($place_main_poster)) ? ' active' : '' }}">
+                                    <a class="poster_place-thumb" data-fancybox="gallery" href="{{ asset('images/places/' . $place->id . '/' . $poster['alias']) }}">
+                                        <img class="img-fluid" src="{{ asset('images/places/' . $place->id . '/' . $poster['alias']) }}" alt="{{ $place->name }}">
+                                    </a>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
+            @endif
 
             <div class="col-12 pt-3 d-print-none">
                 <div class="card text-center">

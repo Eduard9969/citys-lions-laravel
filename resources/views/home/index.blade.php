@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-8">
+            <div class="col-12 col-md-8 mb-4 mb-md-0">
                 <div class="row">
                     @include('components.list.place', ['places' => $places])
 
@@ -17,7 +17,7 @@
                 </div>
             </div>
 
-            <div class="col-4">
+            <div class="col-12 col-md-4">
                 @include('components.sidebars.main')
             </div>
         </div>

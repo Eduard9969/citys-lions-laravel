@@ -15,6 +15,28 @@
                                 <div class="form-group row">
                                     <label for="" class="col-md-4 col-form-label text-md-right">{{ __('Main Poster') }}</label>
                                     <div class="col-md-6">
+                                        @if(!empty($main_poster))
+                                            <div class="row">
+                                                <div class="col-12 pb-3">
+                                                    <a class="poster_place-thumb" data-fancybox href="{{ asset('images/places/' . $place->id . '/' . $main_poster['alias']) }}">
+                                                        <img class="img-fluid" src="{{ asset('images/places/' . $place->id . '/' . $main_poster['alias']) }}" alt="{{ $place->name }}">
+                                                    </a>
+
+                                                    <div class="w-100 text-center">
+                                                        <a href="#" onclick="event.preventDefault();document.getElementById('delete-form-{{ $main_poster['id'] }}').submit();">{{ __('Delete Image') }}</a>
+
+                                                        <input type="hidden" name="poster[added][]" value="{{ $main_poster['id'] }}">
+                                                        <form id="delete-form-{{ $main_poster['id'] }}"
+                                                              action="{{ route('admin.places.images.delete', ['place_picture' => $main_poster['id']]) }}"
+                                                              method="POST"
+                                                              style="display: none;">
+                                                            @csrf()
+                                                            @method('DELETE')
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
                                         <div class="input-group">
                                             <div class="custom-file">
                                                 <input type="file" name="poster[main][]" class="custom-file-input" id="mainImg" required>
@@ -23,6 +45,37 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                @if(!empty($posters))
+                                    <div class="col-12 border-top pb-3"></div>
+
+                                    <div class="form-group row">
+                                        <label for="otherImg" class="col-md-4 col-form-label text-md-right">{{ __('Added Images') }}</label>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                @foreach($posters as $poster)
+                                                    <div class="col-12 pb-3">
+                                                        <a class="poster_place-thumb m-auto d-block overflow-hidden h-auto" style="max-height: 200px;width: auto;" data-fancybox="gallery" href="{{ asset('images/places/' . $place->id . '/' . $poster['alias']) }}">
+                                                            <img class="img-fluid" src="{{ asset('images/places/' . $place->id . '/' . $poster['alias']) }}" alt="{{ $place->name }}">
+                                                        </a>
+                                                        <div class="w-100 text-center">
+                                                            <a href="#" onclick="event.preventDefault();document.getElementById('delete-form-{{ $poster['id'] }}').submit();">{{ __('Delete Image') }}</a>
+
+                                                            <input type="hidden" name="poster[added][]" value="{{ $poster['id'] }}">
+                                                            <form id="delete-form-{{ $poster['id'] }}"
+                                                                  action="{{ route('admin.places.images.delete', ['place_picture' => $poster['id']]) }}"
+                                                                  method="POST"
+                                                                  style="display: none;">
+                                                                @csrf()
+                                                                @method('DELETE')
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
 
                                 <div class="col-12 border-top pb-3"></div>
 

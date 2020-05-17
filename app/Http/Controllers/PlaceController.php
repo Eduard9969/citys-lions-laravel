@@ -14,18 +14,48 @@ class PlaceController extends Controller
      * Display a listing of the resource.
      *
      * @param Place $place
+     * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Place $place)
+    public function index(Place $place, Request $request)
     {
-        $places = $place::where('status_id', 1)->paginate($this->list_item_count);
+        $sort   = $request->get('sort_by', 'created_at_desc');
+        $filter = $request->get('filter');
+
+        $allow_direct  = ['asc', 'desc'];
+        $allow_sort    = ['created_at', 'name'];
+
+        $sort_field = $directive = '';
+
+        if(!empty($sort))
+        {
+            $arr = explode('_', $sort);
+
+            if(!empty($arr))
+            {
+                $directive = array_reverse($arr)[0];
+                $directive = in_array($directive, $allow_direct) ? $directive : 'desc';
+
+                unset($arr[count($arr) - 1]);
+
+                $sort_field = implode('_', $arr);
+                $sort_field = in_array($sort_field, $allow_sort) ? $sort_field : 'created_at';
+
+                $sort       = $sort_field . '_' . $directive;
+            }
+        }
+
+        $places = $place::where('status_id', 1)->orderBy($sort_field, $directive)->paginate($this->list_item_count);
         foreach ($places as $key => $place)
         {
             $poster = $place->posters()->where('is_main', 1)->get()->toArray();
             $places[$key]->main_poster = (isset($poster[0]) && isset($poster[0]['alias']) ? $poster[0]['alias'] : '');
         }
 
-        $this->_assign('places', $places);
+        $this->_assign('places',        $places);
+
+        $this->_assign('allow_sort',    $allow_sort);
+        $this->_assign('sort',          $sort);
 
         return view('place.list');
     }

@@ -4,7 +4,7 @@
     <div class="container justify-content-center">
         <div class="col-12">
             <div class="row">
-                <div class="col-3 card align-items-center p-3">
+                <div class="col-12 col-md-3 card align-items-center p-3 mb-3 mb-md-0">
                     <div class="avatar position-relative overflow-hidden rounded-circle bg-light text-center" style="width: 150px;height:150px;">
                         @if($user['id'] == \Illuminate\Support\Facades\Auth::id() && (!isset($user['avatar_alias']) || empty($user['avatar_alias'])))
                             <a href="{{ route('user.settings.avatar') }}"
@@ -20,7 +20,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-9 card">
+                <div class="col-12 col-md-9 card">
                     <div class="card-body">
                         <table>
                             <tbody>

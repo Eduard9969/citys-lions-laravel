@@ -31,7 +31,7 @@ class PlaceController extends BaseAdminController
         foreach ($places_statuses as $key => $places_status)
             $statuses[$places_status] = $key;
 
-        $places = $place::where('status_id', $status_id)->paginate($this->list_item_count);
+        $places = $place::where('status_id', $status_id)->orderBy('created_at', 'desc')->paginate($this->list_item_count);
 
         $this->_assign('places_statuses', $statuses);
         $this->_assign('places', $places);
@@ -126,7 +126,22 @@ class PlaceController extends BaseAdminController
      */
     public function attachImages(Place $place)
     {
-        $this->_assign('place', $place);
+        $posters     = $place->posters()->get();
+        $main_poster = [];
+        foreach ($posters->toArray() as $key => $poster)
+        {
+            if($poster['is_main'])
+            {
+                $main_poster = $poster;
+                unset($posters[$key]);
+            }
+
+        }
+
+        $this->_assign('place',       $place);
+
+        $this->_assign('main_poster', $main_poster);
+        $this->_assign('posters',     $posters->toArray());
 
         return view('admin.places.images');
     }
@@ -188,4 +203,15 @@ class PlaceController extends BaseAdminController
         return redirect()->back();
     }
 
+    /**
+     * Remove Pictures
+     *
+     * @param PlacePicture $place_picture
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteImages(PlacePicture $place_picture)
+    {
+        $place_picture::destroy($place_picture->id);
+        return redirect()->back();
+    }
 }

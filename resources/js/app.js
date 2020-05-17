@@ -30,3 +30,34 @@ require('./preview');
 // const app = new Vue({
 //     el: '#app',
 // });
+
+/**
+ * Fancybox
+ */
+require('@fancyapps/fancybox/dist/jquery.fancybox.min');
+
+/**
+ * Slick Carousel
+ */
+require('slick-carousel');
+$('.posters_place').slick({
+    infinite:         false,
+    slidesToShow:     4,
+    slidesToScroll:   1,
+    responsive: [{
+        breakpoint: 1024,
+        settings: {
+            slidesToShow: 3,
+        }
+    }, {
+
+        breakpoint: 600,
+        settings: {
+            slidesToShow: 2,
+        }
+    }, {
+        breakpoint: 300,
+        settings: "unslick" // destroys slick
+    }]
+});
+

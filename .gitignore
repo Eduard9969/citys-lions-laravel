@@ -16,6 +16,7 @@ public_html/storage
 public_html/hot
 public/images/places
 public/images/user
+public/images/user_pic
 
 storage/*.key
 .env

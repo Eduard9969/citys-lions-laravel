@@ -39,7 +39,7 @@
                                         @endif
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input type="file" name="poster[main][]" class="custom-file-input" id="mainImg" required>
+                                                <input type="file" name="poster[main][]" class="custom-file-input" id="mainImg">
                                                 <label class="custom-file-label" for="mainImg">{{ __('Choose Main Image...') }}</label>
                                             </div>
                                         </div>

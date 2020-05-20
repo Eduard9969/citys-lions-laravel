@@ -23,16 +23,11 @@
                                                     </a>
 
                                                     <div class="w-100 text-center">
-                                                        <a href="#" onclick="event.preventDefault();document.getElementById('delete-form-{{ $main_poster['id'] }}').submit();">{{ __('Delete Image') }}</a>
+                                                        <a href="#" onclick="event.preventDefault();document.getElementById('delete-form-{{ $main_poster['id'] }}').submit();">
+                                                            {{ __('Delete Image') }}
+                                                        </a>
 
                                                         <input type="hidden" name="poster[added][]" value="{{ $main_poster['id'] }}">
-                                                        <form id="delete-form-{{ $main_poster['id'] }}"
-                                                              action="{{ route('admin.places.images.delete', ['place_picture' => $main_poster['id']]) }}"
-                                                              method="POST"
-                                                              style="display: none;">
-                                                            @csrf()
-                                                            @method('DELETE')
-                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -62,13 +57,6 @@
                                                             <a href="#" onclick="event.preventDefault();document.getElementById('delete-form-{{ $poster['id'] }}').submit();">{{ __('Delete Image') }}</a>
 
                                                             <input type="hidden" name="poster[added][]" value="{{ $poster['id'] }}">
-                                                            <form id="delete-form-{{ $poster['id'] }}"
-                                                                  action="{{ route('admin.places.images.delete', ['place_picture' => $poster['id']]) }}"
-                                                                  method="POST"
-                                                                  style="display: none;">
-                                                                @csrf()
-                                                                @method('DELETE')
-                                                            </form>
                                                         </div>
                                                     </div>
                                                 @endforeach
@@ -84,7 +72,7 @@
                                     <div class="col-md-6">
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input type="file" name="poster[other][]" class="custom-file-input" id="otherImg" required>
+                                                <input type="file" name="poster[other][]" class="custom-file-input" id="otherImg">
                                                 <label class="custom-file-label" for="otherImg">{{ __('Choose Image...') }}</label>
                                                 <span class="text-hide-label d-none">{{ __('Choose Image...') }}</span>
                                             </div>
@@ -109,6 +97,28 @@
                                 </div>
                             </div>
                         </form>
+
+                        @if(!empty($main_poster))
+                            <form id="delete-form-{{ $main_poster['id'] }}"
+                                  action="{{ route('admin.places.images.delete', ['place_picture' => $main_poster['id']]) }}"
+                                  method="POST"
+                                  style="display: none;">
+                                @csrf()
+                                @method('DELETE')
+                            </form>
+                        @endif
+
+                        @if(!empty($posters))
+                            @foreach($posters as $poster)
+                                <form id="delete-form-{{ $poster['id'] }}"
+                                      action="{{ route('admin.places.images.delete', ['place_picture' => $poster['id']]) }}"
+                                      method="POST"
+                                      style="display: none;">
+                                    @csrf()
+                                    @method('DELETE')
+                                </form>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>

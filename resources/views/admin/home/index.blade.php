@@ -40,7 +40,7 @@
             <div class="col-12 mt-4">
                 <div class="row">
                     <div class="col-4">
-                        <a href="{{ route('admin.comments.list') }}" class="card bg-light">
+                        <a href="{{ route('admin.comments.list') }}" class="card">
                             <div class="card-body py-2 text-center">
                                 <span class="btn text-black border-0">
                                     {{ __('Comments') }}

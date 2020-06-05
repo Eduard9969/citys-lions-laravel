@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'auth.registed'], function () {
+Route::group(['middleware' => ['minify', 'auth.registed']], function () {
     /**
      * Home
      */

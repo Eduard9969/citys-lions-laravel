@@ -29,10 +29,10 @@ class Suggest extends Model
     /**
      * Get Author
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function author()
     {
-        return $this->belongsToMany('App\Http\Models\User', 'users', 'user_id', 'id');
+        return $this->hasMany('App\Http\Models\User', 'id', 'user_id');
     }
 }

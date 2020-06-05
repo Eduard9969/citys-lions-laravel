@@ -14,8 +14,7 @@ class PlaceRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = Auth::user();
-        return (!empty($user) && $user->isAdmin());
+        return (!empty(Auth::user()));
     }
 
     /**

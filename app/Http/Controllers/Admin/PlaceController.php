@@ -112,7 +112,7 @@ class PlaceController extends BaseAdminController
      */
     public function destroy(Place $place)
     {
-        $place->status_id = 0;
+        $place->status_id = 2;
         $place->save();
 
         return redirect()->back();

@@ -1,7 +1,7 @@
 <div class="card mb-3">
 
     <div class="card-header">
-        {{ __('Last Ratings') }}
+        {{ __('Ratings Update') }}
     </div>
 
     <div class="card-body py-0">

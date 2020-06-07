@@ -108,4 +108,18 @@ class UserController extends Controller
 
         return redirect()->to(route('user.user'));
     }
+
+    /**
+     * Delete user avatar
+     *
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function settingsAvatarDelete(User $user)
+    {
+        $user->avatar_alias = null;
+        $user->save();
+
+        return redirect()->back();
+    }
 }

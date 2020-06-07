@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="col-4">
-                        <a href="{{ route('admin.users.list') }}" class="card bg-light">
+                        <a href="{{ route('admin.users.list') }}" class="card">
                             <div class="card-body py-2 text-center">
                                 <span class="btn text-black border-0">
                                     {{ __('Users') }}

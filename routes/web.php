@@ -66,6 +66,7 @@ Route::group(['middleware' => 'auth.registed'], function () {
 
             Route::get('settings/avatar', 'UserController@settingsAvatar')->name('settings.avatar');
             Route::post('settings/avatar', 'UserController@settingsAvatarUpdate')->name('settings.avatar.post');
+            Route::delete('settings/{user}/avatar', 'UserController@settingsAvatarDelete')->name('settings.avatar.delete');
         });
 
         Route::get('/', function () { return redirect(
@@ -116,7 +117,7 @@ Route::group(['middleware' => 'auth.registed'], function () {
                 'show'      => 'users.item',
                 'edit'      => 'users.edit',
                 'update'    => 'users.update',
-                'delete'    => 'users.delete',
+                'destroy'   => 'users.delete',
             ]
         ]);
 

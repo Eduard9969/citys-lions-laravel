@@ -159,7 +159,7 @@ class PlaceController extends BaseAdminController
     {
         $poster = $request['poster'] ?? [];
 
-        $main   = $poster['main'] && $poster['main'][0] ? $poster['main'][0] : [];
+        $main   = isset($poster['main']) && isset($poster['main'][0]) ? $poster['main'][0] : [];
         $other  = $poster['other'] ?? [];
 
         $path   = $this->getImagePath('places' . '/' . $place->id);

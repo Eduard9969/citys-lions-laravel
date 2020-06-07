@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'auth.registed'], function () {
+Route::group(['middleware' => ['minify', 'auth.registed']], function () {
     /**
      * Home
      */
@@ -54,7 +54,11 @@ Route::group(['middleware' => 'auth.registed'], function () {
     /**
      * Guides
      */
-    Route::resource('guides', 'GuideController');
+    Route::group(['prefix' => '/guides', 'as' => 'guides.'], function() {
+        Route::get('/', 'GuideController@index')->name('list');
+        Route::get('/create', 'GuideController@create')->name('create');
+        Route::get('/{guide}/edit', 'GuideController@edit')->name('edit');
+    });
 
     /**
      * Users
@@ -100,6 +104,18 @@ Route::group(['middleware' => 'auth.registed'], function () {
                 'edit'      => 'comments.edit',
                 'update'    => 'comments.update',
                 'destroy'   => 'comments.delete',
+            ]
+        ]);
+
+        Route::resource('guides', 'Admin\GuideController', [
+            'names' => [
+                'index'     => 'guides.list',
+                'create'    => 'guides.create',
+                'store'     => 'guides.store',
+                'show'      => 'guides.item',
+                'edit'      => 'guides.edit',
+                'update'    => 'guides.update',
+                'destroy'   => 'guides.delete',
             ]
         ]);
 

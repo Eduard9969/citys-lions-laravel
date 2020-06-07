@@ -2,7 +2,7 @@
     <div class="card mb-3">
 
         <div class="card-header">
-            {{ __('Last Users') }}
+            {{ __('New Users') }}
         </div>
 
         <div class="card-body py-0">

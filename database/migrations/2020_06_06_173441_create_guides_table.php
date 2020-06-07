@@ -15,11 +15,14 @@ class CreateGuidesTable extends Migration
     {
         Schema::create('guides', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('first_name', 255);
-            $table->string('last_name', 255);
-            $table->dateTime('start_work');
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('phone');
+            $table->text('description')->nullable();
+//            $table->dateTime('start_work');
             $table->tinyInteger('status_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

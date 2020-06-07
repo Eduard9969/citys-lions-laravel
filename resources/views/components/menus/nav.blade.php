@@ -16,6 +16,9 @@
                         <a class="nav-link" href="{{ route('places.list') }}">{{ __('Places') }}</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('guides.list') }}">{{ __('Guides') }}</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link text-success" href="{{ route('places.suggest.create') }}">{{ __('Suggest Place') }}</a>
                     </li>
                 </ul>
@@ -26,6 +29,9 @@
                 @if(empty($admin_area))
                     <li class="nav-item d-md-none">
                         <a class="nav-link" href="{{ route('places.list') }}">{{ __('Places') }}</a>
+                    </li>
+                    <li class="nav-item d-md-none">
+                        <a class="nav-link" href="{{ route('guides.list') }}">{{ __('Guides') }}</a>
                     </li>
                     <li class="nav-item d-md-none">
                         <a class="nav-link text-success" href="{{ route('places.suggest.create') }}">{{ __('Suggest Place') }}</a>

@@ -21,4 +21,23 @@ class PlaceComment extends Model
         'comment'
     ];
 
+    /**
+     * Author comment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\Http\Models\User');
+    }
+
+    /**
+     * Place comment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function place()
+    {
+        return $this->belongsTo('App\Http\Models\Place');
+    }
 }

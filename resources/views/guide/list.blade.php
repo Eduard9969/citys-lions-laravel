@@ -24,7 +24,7 @@
                     <div class="card justify-content-center">
                         <div class="card-body">
                             <div class="avatar position-relative overflow-hidden rounded-circle bg-light text-center m-auto" style="width: 150px;height:150px;">
-                                <img @if(isset($guide->user->avatar_alias) && !empty($guide->user->avatar_alias)) src="{{ asset('images/user_pic/' . $guide->user->id . '/' . $guide->user->id) }}" @endif
+                                <img @if(isset($guide->user->avatar_alias) && !empty($guide->user->avatar_alias)) src="{{ asset('images/user_pic/' . $guide->user->id . '/' . $guide->user->avatar_alias) }}" @endif
                                 class="position-absolute"
                                      style="left: 50%;top:50%;transform: translate(-50%, -50%);width: 100%;min-height: 100%">
                             </div>

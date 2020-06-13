@@ -58,6 +58,9 @@ Route::group(['middleware' => ['minify', 'auth.registed']], function () {
         Route::get('/', 'GuideController@index')->name('list');
         Route::get('/create', 'GuideController@create')->name('create');
         Route::get('/{guide}/edit', 'GuideController@edit')->name('edit');
+        Route::post('/', 'GuideController@store')->name('store');
+        Route::put('/{guide}/update', 'GuideController@update')->name('update');
+        Route::delete('/{guide}/destroy', 'GuideController@destroy')->name('delete');
     });
 
     /**

@@ -13,12 +13,14 @@ class UserController extends BaseAdminController
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @param User $user
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(User $user)
+    public function index(Request $request, User $user)
     {
-        $users = $user::orderBy('created_at', 'desc')->paginate($this->list_item_count);
+        $status_id  = $request->get('status_id');
+        $this->_assign('status_id',         $status_id);
 
         $users_statuses = config('statuses.users');
         $statuses = [];
@@ -26,8 +28,13 @@ class UserController extends BaseAdminController
         foreach ($users_statuses as $key => $users_status)
             $statuses[$users_status] = $key;
 
-        $this->_assign('users', $users);
-        $this->_assign('users_statuses', $statuses);
+        $status_id = is_null($status_id) ? array_keys($statuses) : [$status_id];
+        $users      = $user::orderBy('created_at', 'desc')
+                            ->whereIN($user->getTable() . '.status_id', $status_id)
+                            ->paginate($this->list_item_count);
+
+        $this->_assign('users',             $users);
+        $this->_assign('users_statuses',    $statuses);
 
         return view('admin.users.index');
     }
@@ -123,7 +130,8 @@ class UserController extends BaseAdminController
         $user->fill($request);
         $user->save();
 
-        $user->syncRoles([$request['role_id']]);
+        if (isset($request['role_id']))
+            $user->syncRoles([$request['role_id']]);
 
         return redirect()->to(route('admin.users.list'));
     }

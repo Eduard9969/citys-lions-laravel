@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __((!empty($guide) ? 'Edit' : 'Add new') . ' Guide') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ !empty($guide) ? route('admin.guides.update', ['guide' => $guide->id]) : route('admin.guides.store') }}" >
+                        <form method="POST" action="{{ !empty($guide) ? route('guides.update', ['guide' => $guide->id]) : route('guides.store') }}" >
                             @csrf
 
                             @if(!empty($guide))

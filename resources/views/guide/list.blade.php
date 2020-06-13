@@ -12,7 +12,7 @@
                         <a href="#" class="btn btn-danger" onclick="event.preventDefault();document.getElementById('delete-form-{{ $user_guide->id }}').submit();">
                             {{ __('Delete') }}
                         </a>
-                        <form id="delete-form-{{ $user_guide->id }}" action="{{ route('admin.guides.delete', ['guide' => $user_guide->id]) }}" method="POST" style="display: none;">
+                        <form id="delete-form-{{ $user_guide->id }}" action="{{ route('guides.delete', ['guide' => $user_guide->id]) }}" method="POST" style="display: none;">
                             @csrf
                             @method('DELETE')
                         </form>
